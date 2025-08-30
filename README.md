@@ -7,6 +7,8 @@ Wealth Tracker is a web application that aims to facilitate the way of tracking 
 ## Stack
 
 * **Nuxt**
+* **Drizzle**
+* **Docker**
 * **Reka UI**
 * **PostgreSQL**
 * **Redis**

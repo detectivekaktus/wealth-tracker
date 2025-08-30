@@ -8,17 +8,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    env_file:
+      - .env
 
   db:
-    image: postgres:13.22-alpine3.21
+    image: postgres:17-alpine3.21
     container_name: wealth-tracker-db
     restart: always
     ports:
       - 5432:5432
     env_file:
-      - .env.db
+      - .env
     volumes:
-      - wealth_tracker_pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  wealth_tracker_pgdata:
+  pgdata:
