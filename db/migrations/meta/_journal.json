@@ -15,6 +15,20 @@
       "when": 1756626533803,
       "tag": "0001_supreme_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756630254369,
+      "tag": "0002_omniscient_forgotten_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1756632833269,
+      "tag": "0003_burly_grey_gargoyle",
+      "breakpoints": true
     }
   ]
 }

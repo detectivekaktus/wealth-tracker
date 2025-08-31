@@ -1,0 +1,167 @@
+[
+  {
+    "code": "EUR",
+    "symbol": "€",
+    "name": "Euro"
+  },
+  {
+    "code": "USD",
+    "symbol": "$",
+    "name": "United States Dollar"
+  },
+  {
+    "code": "RUB",
+    "symbol": "₽",
+    "name": "Russian Ruble"
+  },
+  {
+    "code": "BYN",
+    "symbol": "BYN",
+    "name": "Belarusian Ruble"
+  },
+  {
+    "code": "PLN",
+    "symbol": "zł",
+    "name": "Polish Zloty"
+  },
+  {
+    "code": "CZK",
+    "symbol": "Kč",
+    "name": "Czech Koruna"
+  },
+  {
+    "code": "UAH",
+    "symbol": "₴",
+    "name": "Ukrainian Hryvnia"
+  },
+  {
+    "code": "GBP",
+    "symbol": "£",
+    "name": "Pound Sterling"
+  },
+  {
+    "code": "SEK",
+    "symbol": "kr",
+    "name": "Swedish Krona"
+  },
+  {
+    "code": "NOK",
+    "symbol": "kr",
+    "name": "Norvegian Krone"
+  },
+  {
+    "code": "DKK",
+    "symbol": "kr.",
+    "name": "Danish Krone"
+  },
+  {
+    "code": "ISK",
+    "symbol": "kr",
+    "name": "Icelandic krona"
+  },
+  {
+    "code": "CHF",
+    "symbol": "fr",
+    "name": "Swiss Franc"
+  },
+  {
+    "code": "TRY",
+    "symbol": "₺",
+    "name": "Turkish Lira"
+  },
+  {
+    "code": "GEL",
+    "symbol": "₾",
+    "name": "Georgian Lari"
+  },
+  {
+    "code": "RSD",
+    "symbol": "DIN",
+    "name": "Serbian Dinar"
+  },
+  {
+    "code": "HUF",
+    "symbol": "Ft",
+    "name": "Hungarian Forint"
+  },
+  {
+    "code": "MDL",
+    "symbol": "L",
+    "name": "Moldovan Leu"
+  },
+  {
+    "code": "RON",
+    "symbol": "RON",
+    "name": "Romanian Leu"
+  },
+  {
+    "code": "ALL",
+    "symbol": "L",
+    "name": "Albanian Lek"
+  },
+  {
+    "code": "MKD",
+    "symbol": "DEN",
+    "name": "Macedonian Denar"
+  },
+  {
+    "code": "BAM",
+    "symbol": "KM",
+    "name": "Convertible Mark"
+  },
+  {
+    "code": "ILS",
+    "symbol": "₪",
+    "name": "New Israeli Shekel"
+  },
+  {
+    "code": "CNY",
+    "symbol": "¥",
+    "name": "Renminbi"
+  },
+  {
+    "code": "JPY",
+    "symbol": "¥",
+    "name": "Japanese Yen"
+  },
+  {
+    "code": "CAD",
+    "symbol": "$",
+    "name": "Canadian Dollar"
+  },
+  {
+    "code": "AUD",
+    "symbol": "$",
+    "name": "Australian Dollar"
+  },
+  {
+    "code": "INR",
+    "symbol": "₹",
+    "name": "Indian Rupee"
+  },
+  {
+    "code": "AED",
+    "symbol": "D",
+    "name": "Emirati Dirham"
+  },
+  {
+    "code": "SAR",
+    "symbol": "SAR",
+    "name": "Saudi Riyal"
+  },
+  {
+    "code": "BTC",
+    "symbol": "BTC",
+    "name": "Bitcoin"
+  },
+  {
+    "code": "ETH",
+    "symbol": "ETH",
+    "name": "Ethereum"
+  },
+  {
+    "code": "USDT",
+    "symbol": "USDT",
+    "name": "Tether"
+  }
+]

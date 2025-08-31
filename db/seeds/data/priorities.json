@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Low",
+    "value": 0
+  },
+  {
+    "name": "Normal",
+    "value": 1
+  },
+  {
+    "name": "Moderate",
+    "value": 2
+  },
+  {
+    "name": "High",
+    "value": 3
+  }
+]

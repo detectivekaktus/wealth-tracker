@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Income",
+    "isIncome": true,
+    "iconUrl": "/income-icon.png"
+  },
+  {
+    "name": "Groceries",
+    "isIncome": false,
+    "iconUrl": "/groceries-icon.png"
+  },
+  {
+    "name": "Entertainment",
+    "isIncome": false,
+    "iconUrl": "/entertainment-icon.png"
+  },
+  {
+    "name": "Shopping",
+    "isIncome": false,
+    "iconUrl": "/shopping-icon.png"
+  },
+  {
+    "name": "Bills & Fees",
+    "isIncome": false,
+    "iconUrl": "/bills-icon.png"
+  },
+  {
+    "name": "Work",
+    "isIncome": false,
+    "iconUrl": "/work-icon.png"
+  },
+  {
+    "name": "Transport",
+    "isIncome": false,
+    "iconUrl": "/transport-icon.png"
+  }
+]
