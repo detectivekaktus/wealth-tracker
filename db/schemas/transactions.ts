@@ -27,9 +27,24 @@ export const transactions = pgTable("transactions", {
 });
 
 export const transactionsRelations = relations(transactions, ({ one }) => ({
-  user: one(users),
-  currency: one(currencies),
-  creditAccount: one(accounts, { fields: [transactions.creditAccountId], references: [accounts.id] }),
-  debitAccount: one(accounts, { fields: [transactions.debitAccountId], references: [accounts.id] }),
-  category: one(categories)
+  user: one(users, {
+    fields: [transactions.userId],
+    references: [users.id]
+  }),
+  currency: one(currencies, {
+    fields: [transactions.currencyId],
+    references: [currencies.id]
+  }),
+  creditAccount: one(accounts, {
+    fields: [transactions.creditAccountId],
+    references: [accounts.id]
+  }),
+  debitAccount: one(accounts, {
+    fields: [transactions.debitAccountId],
+    references: [accounts.id]
+  }),
+  category: one(categories, {
+    fields: [transactions.categoryId],
+    references: [categories.id]
+  })
 }));

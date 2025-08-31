@@ -27,7 +27,16 @@ export const goals = pgTable("goals", {
 });
 
 export const goalsRelations = relations(goals, ({ one }) => ({
-  user: one(users),
-  storage: one(storages),
-  priority: one(priorities)
+  user: one(users, {
+    fields: [goals.userId],
+    references: [users.id]
+  }),
+  storage: one(storages, {
+    fields: [goals.storageId],
+    references: [storages.id]
+  }),
+  priority: one(priorities, {
+    fields: [goals.priorityId],
+    references: [priorities.id]
+  })
 }));

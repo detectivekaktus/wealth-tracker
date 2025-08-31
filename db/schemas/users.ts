@@ -1,6 +1,13 @@
 import { boolean, integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { currencies } from "./currencies";
 import { relations } from "drizzle-orm";
+import { accounts } from "./accounts";
+import { goals } from "./goals";
+import { storages } from "./storages";
+import { transactions } from "./transactions";
+import { recurringEvents } from "./recurringEvents"
+import { categories } from "./categories";
+
 
 /**
  * Users table. Meant to store user data.
@@ -17,8 +24,18 @@ export const users = pgTable("users", {
   currencyId: integer("preferred_currency").notNull().references(() => currencies.id)
 });
 
-// Each user has one currency preference.
-// For self references see https://orm.drizzle.team/docs/relations#one-to-one
-export const usersRelations = relations(users, ({ one }) => ({
-  preferredCurrency: one(currencies)
+export const usersRelations = relations(users, ({ one, many }) => ({
+  // Each user has one currency preference.
+  // For self references see https://orm.drizzle.team/docs/relations#one-to-one
+  preferredCurrency: one(currencies, {
+    fields: [users.currencyId],
+    references: [currencies.id]
+  }),
+  
+  accounts: many(accounts),
+  goals: many(goals),
+  storages: many(storages),
+  transactions: many(transactions),
+  events: many(recurringEvents),
+  categories: many(categories)
 }));

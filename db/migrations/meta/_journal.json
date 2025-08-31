@@ -8,6 +8,13 @@
       "when": 1756560963812,
       "tag": "0000_past_nighthawk",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1756626533803,
+      "tag": "0001_supreme_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }

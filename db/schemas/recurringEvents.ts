@@ -31,8 +31,20 @@ export const recurringEvents = pgTable("recurringEvents", {
 });
 
 export const recurringEventsRelations = relations(recurringEvents, ({ one }) => ({
-  user: one(users),
-  currency: one(currencies),
-  category: one(categories),
-  storage: one(storages)
+  user: one(users, {
+    fields: [recurringEvents.userId],
+    references: [users.id]
+  }),
+  currency: one(currencies, {
+    fields: [recurringEvents.currencyId],
+    references: [currencies.id]
+  }),
+  category: one(categories, {
+    fields: [recurringEvents.categoryId],
+    references: [categories.id]
+  }),
+  storage: one(storages, {
+    fields: [recurringEvents.storageId],
+    references: [storages.id]
+  })
 }));

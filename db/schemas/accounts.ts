@@ -27,7 +27,16 @@ export const accounts = pgTable("accounts", {
 });
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users),
-  category: one(categories),
-  storage: one(storages)
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id]
+  }),
+  category: one(categories, {
+    fields: [accounts.categoryId],
+    references: [categories.id]
+  }),
+  storage: one(storages, {
+    fields: [accounts.storageId],
+    references: [storages.id]
+  })
 }));

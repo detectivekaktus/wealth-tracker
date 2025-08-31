@@ -11,7 +11,7 @@ if (
   throw new Error("You must specify POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, and POSTGRES_PORT environment variables.");
 }
 
-const dbUrl = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:${POSTGRES_PORT}/${POSTGRES_DB}`
+export const dbUrl = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:${POSTGRES_PORT}/${POSTGRES_DB}`
 
 export default defineConfig({
   dialect: "postgresql",

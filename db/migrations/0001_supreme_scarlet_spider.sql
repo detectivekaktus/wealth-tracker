@@ -1,0 +1,1 @@
+ALTER TABLE "currencies" ADD COLUMN "name" varchar(64) NOT NULL;
