@@ -1,7 +1,16 @@
-import { getSeedConnection } from ".";
 import * as seeds from "./seeds";
 import * as schema from "./schemas"
 import { getTableName } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { dbUrl } from "../drizzle.config";
+import { Pool } from "pg";
+
+function getSeedConnection() {
+  return drizzle(new Pool({
+    connectionString: dbUrl,
+    max: 1 // it should not allow any parallel insertions when seeding
+  }));
+}
 
 /**
  * Truncates the table, restarting its serial id from 1.

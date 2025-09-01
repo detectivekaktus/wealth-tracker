@@ -1,13 +1,11 @@
 import "dotenv/config"
 import { drizzle } from "drizzle-orm/node-postgres";
 import { dbUrl } from "../drizzle.config";
-import { Pool } from "pg";
+import * as schema from "./schemas"
 
-export function getSeedConnection() {
-  return drizzle(new Pool({
-    connectionString: dbUrl,
-    max: 1 // it should not allow any parallel insertions when seeding
-  }));
-}
+// The schema is passed to access query syntax in drizzle
+// After some trials I found out that you can use select
+// syntax without passing the schema as the parameter.
+const db = drizzle(dbUrl, { schema: schema });
 
-export const db = drizzle(dbUrl);
+export default db;
