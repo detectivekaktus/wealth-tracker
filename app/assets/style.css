@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  --clr-neutral-900: #000000;
+  --clr-neutral-800: #090a0a;
+  --clr-neutral-700: #343434;
+  --clr-neutral-600: #505050;
+  --clr-neutral-500: #888888;
+  --clr-neutral-400: #e5e5e5;
+  --clr-neutral-300: #f0f0f0;
+  --clr-neutral-200: #f2f7fb;
+  --clr-neutral-100: #ffffff;
+
+  --clr-accent-500: #0e38b9;
+  --clr-accent-400: #4d6dd5;
+  --clr-accent-300: #708ae0;
+
+  --clr-danger-600: #c40c37;
+  --clr-danger-500: #e91547;
+  --clr-danger-400: #f04f75;
+
+  --clr-success-600: #07ad5b;
+  --clr-success-500: #0ed371;
+  --clr-success-400: #57f2a5;
+
+  --ff-primary: "Inter", sans-serif;
+
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  --size-900: 2rem; 
+  --size-800: 1.375rem;
+  --size-700: 1.25rem;
+  --size-600: 1.125rem;
+  --size-500: 1rem;
+  --size-400: .875rem;
+  --size-300: .8125rem;
+
+  --spacing-600: 2rem;
+  --spacing-500: 1.875rem;
+  --spacing-400: 1.25rem;
+  --spacing-300: 1rem;
+}
+
+@media (min-width: 50em) {
+  :root {
+    --size-900: 4rem;
+    --size-800: 2rem;
+    --size-700: 1.875rem;
+    --size-600: 1.5625rem;
+    --size-500: 1.1875rem;
+    --size-400: 1.25rem;
+    --size-300: 1rem;
+
+    --spacing-600: 11.875rem;
+    --spacing-500: 4.375rem;
+    --spacing-400: 3.75rem;
+    --spacing-300: 2.25rem;
+  }
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: var(--fw-regular);
+  color: var(--clr-neutral-800);
+  background-color: var(--clr-neutral-200);
+}

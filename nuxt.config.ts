@@ -4,5 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   imports: {
     scan: false
-  }
+  },
+  // ~, @ point to srcDir
+  // ~~, @@ point to rootDir
+  css: [
+    "~/assets/reset.css",
+    "~/assets/style.css",
+    "~/assets/utilities.css"
+  ]
 })
