@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-const text = ref("");
+const checked = ref(true);
 </script>
 
 <template>
-  <AppTextbox v-model="text" type="text"/>
-  <AppTextbox v-model="text" type="text" disabled/>
-  <span>{{ text }}</span>
+  <RekaCheckbox v-model="checked">Blah blah blah</RekaCheckbox>
+  <RekaCheckbox v-model="checked" disabled>Blah blah blah</RekaCheckbox>
 </template>

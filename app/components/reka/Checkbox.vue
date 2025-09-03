@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 /**
- * A labeled checkbox component powered by Reka UI.
+ * A labeled checkbox component powered by Reka UI. Rendered differently if disabled.
  * 
  * @prop {boolean | "indeterminate"} modelValue A value binded with v-model directive
  * @prop {boolean?} disabled If `true` disables the component
@@ -54,9 +54,19 @@ const emits = defineEmits<{
   border-radius: 7px;
 }
 
+.checkbox-root:disabled {
+  border: 1px solid var(--clr-neutral-700);
+  background-color: var(--clr-neutral-400);
+}
+
+.checkbox-root:disabled .checkbox-indicator {
+  color: var(--clr-neutral-600);
+}
+
 .checkbox-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--clr-accent-500);
 }
 </style>

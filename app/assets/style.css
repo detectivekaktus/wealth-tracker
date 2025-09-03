@@ -77,3 +77,10 @@ body {
 a {
   color: var(--clr-accent-400);
 }
+
+*:focus {
+  border: 1px solid var(--clr-neutral-700);
+  outline: 1px solid var(--clr-secondary-400);
+  outline-offset: 1px;
+  transition: ease .1s;
+}
