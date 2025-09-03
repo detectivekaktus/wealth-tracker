@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-const checked = ref(true);
+const text = ref("");
 </script>
 
 <template>
-  <RekaCheckbox v-model="checked">
-    I accept the <a href="#">Terms and Conditions</a>
-  </RekaCheckbox>
+  <AppTextbox v-model="text" type="text"/>
+  <AppTextbox v-model="text" type="text" disabled/>
+  <span>{{ text }}</span>
 </template>

@@ -16,6 +16,8 @@
   --clr-accent-400: #4d6dd5;
   --clr-accent-300: #708ae0;
 
+  --clr-secondary-400: #4091e3;
+
   --clr-danger-600: #c40c37;
   --clr-danger-500: #e91547;
   --clr-danger-400: #f04f75;
@@ -42,6 +44,9 @@
   --spacing-400: 1.25rem;
   --spacing-300: 1rem;
   --spacing-100: .5rem;
+
+  --br-primary: 7px;
+  --br-secondary: 5px;
 }
 
 @media (min-width: 50em) {

@@ -10,12 +10,16 @@
  * @slot default - The content of the button
  */
 const props = defineProps<{
-  datatype?: "external"
+  datatype?: "external",
+  disabled?: boolean
 }>();
 </script>
 
 <template>
-  <button class="button" :datatype="props.datatype">
+  <button
+  class="button"
+  :disabled="props.disabled"
+  :datatype="props.datatype">
     <slot />
   </button>
 </template>
@@ -35,7 +39,7 @@ const props = defineProps<{
   background-color: var(--clr-accent-500);
   color: var(--clr-neutral-200);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--br-secondary);
   padding: 8px;
   transition: all .3s;
 }

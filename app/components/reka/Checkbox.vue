@@ -2,7 +2,7 @@
 /**
  * A labeled checkbox component powered by Reka UI.
  * 
- * @prop {boolean | "indeterminate"} modelValue A value bind with v-model directive
+ * @prop {boolean | "indeterminate"} modelValue A value binded with v-model directive
  * @prop {boolean?} disabled If `true` disables the component
  * @prop {boolean?} required If `true` requires the checkbox to be checked
  * 
