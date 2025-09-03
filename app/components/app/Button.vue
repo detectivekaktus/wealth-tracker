@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 /**
- * Button.vue
- * 
  * A styled button component. This component supports different
  * styles for a standard button, hovered button, focused button
  * and disabled button.
  * 
- * @prop {"external"} [datatype] - Optional variant for the
+ * @prop {"external"} datatype - Optional variant for the
  * button referencing external resources (eg. Sign in with Google).
  * 
  * @slot default - The content of the button
