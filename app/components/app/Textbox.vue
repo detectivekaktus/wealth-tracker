@@ -24,6 +24,7 @@ const emits = defineEmits<{
 
 <template>
 <input
+  class="input"
   :type="props.type"
   :value="props.modelValue"
   @input="emits('update:modelValue', ($event.target as HTMLInputElement).value)"

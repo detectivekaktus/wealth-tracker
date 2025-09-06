@@ -43,6 +43,7 @@
   --spacing-500: 1.875rem;
   --spacing-400: 1.25rem;
   --spacing-300: 1rem;
+  --spacing-200: .75rem;
   --spacing-100: .5rem;
 
   --br-primary: 7px;
@@ -63,11 +64,13 @@
     --spacing-500: 4.375rem;
     --spacing-400: 3.75rem;
     --spacing-300: 2.25rem;
+    --spacing-200: 1rem;
     --spacing-100: .75rem;
   }
 }
 
 body {
+  font-size: var(--size-500);
   font-family: var(--ff-primary);
   font-weight: var(--fw-regular);
   color: var(--clr-neutral-800);
@@ -75,10 +78,15 @@ body {
 }
 
 a {
+  text-decoration: none;
   color: var(--clr-accent-400);
 }
 
-*:focus {
+a:hover {
+  text-decoration: underline;
+}
+
+.input:focus {
   border: 1px solid var(--clr-neutral-700);
   outline: 1px solid var(--clr-secondary-400);
   outline-offset: 1px;

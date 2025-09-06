@@ -24,13 +24,13 @@ const emits = defineEmits<{
 <template>
 <label class="checkbox-label">
   <CheckboxRoot
-  class="checkbox-root"
+  class="checkbox-root input"
   :disabled="props.disabled"
   :required="props.required"
   :model-value="props.modelValue"
   @update:model-value="emits('update:modelValue', $event)">
     <CheckboxIndicator class="checkbox-indicator">
-      <Icon name="mynaui:check" />
+      <Icon name="material-symbols:check-rounded" />
     </CheckboxIndicator>
   </CheckboxRoot>
   <span>

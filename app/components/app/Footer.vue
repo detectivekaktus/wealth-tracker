@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div class="container footer-content">
-      <span class="copyright">Wealth Tracker<br />Copyright © 2025.All rights reserved.</span>
+      <span class="copyright">Wealth Tracker<br />Copyright © 2025. All rights reserved.</span>
       <nav>
         <ul>
           <li>
