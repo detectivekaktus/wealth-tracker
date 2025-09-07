@@ -1,4 +1,11 @@
 <script lang="ts" setup>
+const props = defineProps<{
+  items: {
+    url: string,
+    name: string,
+    iconName: string 
+  }[];
+}>();
 const closed = ref(false);
 </script>
 
@@ -14,63 +21,20 @@ const closed = ref(false);
       </button>
     </div>
     <ul>
-      <li>
-        <!-- NuxtLink's active-class and exact-active-class apply the class specified
-         when the page is rendered at the route the link points to.
-         https://nuxt.com/docs/4.x/api/components/nuxt-link#props -->
+      <li v-for="(item, index) in props.items" :key="index">
+      <!-- NuxtLink's active-class and exact-active-class apply the class specified
+        when the page is rendered at the route the link points to.
+        https://nuxt.com/docs/4.x/api/components/nuxt-link#props -->
         <NuxtLink
-          to="/"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:home"/><span class="nav-link-text">Home</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/history"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:history-2-rounded"/><span class="nav-link-text">History</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/goals"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:rewarded-ads"/><span class="nav-link-text">Goals</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/savings"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:money-bag"/><span class="nav-link-text">Savings</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/budget"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:account-balance-wallet"/><span class="nav-link-text">Budget</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/bookkeeping"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:book"/><span class="nav-link-text">Bookkeeping</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/profile"
-          active-class="nav-active"
-          exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:account-circle"/><span class="nav-link-text">Profile</span>
+        :to="item.url"
+        active-class="nav-active"
+        exact-active-class="nav-active">
+        <RekaTooltip :tooltip="item.name" type="reverse">
+          <div class="nav-item">
+            <Icon :name="item.iconName" mode="svg" size="1.5rem" />
+            <span class="nav-link-text">{{ item.name }}</span>
+          </div>
+        </RekaTooltip>
         </NuxtLink>
       </li>
     </ul>
@@ -104,7 +68,7 @@ li {
   height: 2.75rem;
 }
 
-li a {
+.nav-item {
   display: flex;
   justify-content: center;
   align-items: center;

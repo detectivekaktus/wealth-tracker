@@ -4,13 +4,13 @@
  * styles for a standard button, hovered button, focused button
  * and disabled button.
  * 
- * @prop {"external"} datatype - Optional variant for the
+ * @prop {"external"} type - Optional variant for the
  * button referencing external resources (eg. Sign in with Google).
  * 
  * @slot default - The content of the button
  */
 const props = defineProps<{
-  datatype?: "external",
+  type?: "external",
   disabled?: boolean
 }>();
 </script>
@@ -19,7 +19,7 @@ const props = defineProps<{
   <button
   class="button"
   :disabled="props.disabled"
-  :datatype="props.datatype">
+  :datatype="props.type">
     <slot />
   </button>
 </template>
