@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-// TODO: Toggle the sidebar when in desktop mode.
-// TODO: When the sidebar is closed, render properly the border-radius of the selected
-// item. The solution I came up with clips the right side of the border, leaving it inconsistent
-// and ugly.
 const closed = ref(false);
 </script>
 
 <template>
-  <nav :aria-expanded="!closed">
+  <nav :aria-expanded="!closed" :class="{ 'nav-closed': closed }">
     <div class="toggle-wrapper">
       <button
         aria-label="toggle navigation"
@@ -26,7 +22,7 @@ const closed = ref(false);
           to="/"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon mode="svg" size="1.5rem" name="material-symbols:home"/>Home
+          <Icon mode="svg" size="1.5rem" name="material-symbols:home"/><span class="nav-link-text">Home</span>
         </NuxtLink>
       </li>
       <li>
@@ -34,7 +30,7 @@ const closed = ref(false);
           to="/history"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon size="1.5rem" name="material-symbols:history-2-rounded"/>History
+          <Icon mode="svg" size="1.5rem" name="material-symbols:history-2-rounded"/><span class="nav-link-text">History</span>
         </NuxtLink>
       </li>
       <li>
@@ -42,7 +38,7 @@ const closed = ref(false);
           to="/goals"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon size="1.5rem" name="material-symbols:rewarded-ads"/>Goals
+          <Icon mode="svg" size="1.5rem" name="material-symbols:rewarded-ads"/><span class="nav-link-text">Goals</span>
         </NuxtLink>
       </li>
       <li>
@@ -50,7 +46,7 @@ const closed = ref(false);
           to="/savings"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon size="1.5rem" name="material-symbols:money-bag"/>Savings
+          <Icon mode="svg" size="1.5rem" name="material-symbols:money-bag"/><span class="nav-link-text">Savings</span>
         </NuxtLink>
       </li>
       <li>
@@ -58,7 +54,7 @@ const closed = ref(false);
           to="/budget"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon size="1.5rem" name="material-symbols:account-balance-wallet"/>Budget
+          <Icon mode="svg" size="1.5rem" name="material-symbols:account-balance-wallet"/><span class="nav-link-text">Budget</span>
         </NuxtLink>
       </li>
       <li>
@@ -66,7 +62,7 @@ const closed = ref(false);
           to="/bookkeeping"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon size="1.5rem" name="material-symbols:book"/>Bookkeeping
+          <Icon mode="svg" size="1.5rem" name="material-symbols:book"/><span class="nav-link-text">Bookkeeping</span>
         </NuxtLink>
       </li>
       <li>
@@ -74,7 +70,7 @@ const closed = ref(false);
           to="/profile"
           active-class="nav-active"
           exact-active-class="nav-active">
-          <Icon size="1.5rem" name="material-symbols:account-circle"/>Profile
+          <Icon mode="svg" size="1.5rem" name="material-symbols:account-circle"/><span class="nav-link-text">Profile</span>
         </NuxtLink>
       </li>
     </ul>
@@ -155,6 +151,18 @@ li:has(.nav-active) {
     color: var(--clr-neutral-200);
     display: block;
     transition: ease-in-out .3s;
+  }
+
+  nav.nav-closed {
+    width: 3rem;
+  }
+
+  nav.nav-closed .nav-link-text {
+    display: none;
+  }
+
+  nav.nav-closed .toggle-wrapper {
+    justify-content: center;
   }
 }
 </style>
