@@ -1,4 +1,10 @@
 <script lang="ts" setup>
+/**
+ * Responsible navigation menu. On large screens displayed as a collapsable sidebar.
+ * On small screens is a top scrollable menu.
+ * 
+ * @prop {{ url: string, name: string, iconName: string }} items Array of navigation items. 
+ */
 const props = defineProps<{
   items: {
     url: string,

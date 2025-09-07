@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipProvider, TooltipRoot, TooltipTrigger } from 'reka-ui';
-
+/**
+ * Tooltip component. Wrap the content you want to have a tooltip on and
+ * have a tooltip.
+ * 
+ * @prop {string} tooltip The tooltip shown when hovering the component.
+ * @prop {boolean?} disabled If `true` disables the component.
+ * @prop {"reserve"} type Styles that can be appliede to the tooltip.
+ */
 const props = defineProps<{
   tooltip: string,
   disabled?: boolean,
@@ -41,7 +48,7 @@ button {
   fill: var(--clr-accent-500);
 }
 
-/* REVERSE */
+/* Reverse */
 :global(.tooltip-content[datatype="reverse"]) {
   background-color: var(--clr-neutral-200);
   color: var(--clr-accent-500);
