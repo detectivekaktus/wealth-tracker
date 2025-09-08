@@ -17,3 +17,7 @@
 .rotate {
   rotate: -180deg;
 }
+
+.error-msg {
+  color: var(--clr-danger-500);
+}

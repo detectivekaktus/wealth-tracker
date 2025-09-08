@@ -45,6 +45,7 @@
   --spacing-300: 1rem;
   --spacing-200: .75rem;
   --spacing-100: .5rem;
+  --spacing-50: .25rem;
 
   --br-primary: 7px;
   --br-secondary: 5px;
@@ -66,6 +67,7 @@
     --spacing-300: 2.25rem;
     --spacing-200: 1rem;
     --spacing-100: .75rem;
+    --spacing-50: .5rem;
   }
 }
 
@@ -91,4 +93,16 @@ a:hover {
   outline: 1px solid var(--clr-secondary-400);
   outline-offset: 1px;
   transition: ease .1s;
+}
+
+main {
+  min-height: 100vh;
+}
+
+@media (min-width: 50em) {
+  .main-wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-200);
+  }
 }

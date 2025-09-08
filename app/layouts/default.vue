@@ -16,19 +16,5 @@ const navItems = [
       <slot />
     </main>
   </div>
-  <AppFooter />
+  <AppFooter class="margin-top" />
 </template>
-
-<style scoped>
-main {
-  min-height: 100vh;
-}
-
-@media (min-width: 50em) {
-  .main-wrapper {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--spacing-200);
-  }
-}
-</style>

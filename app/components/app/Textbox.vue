@@ -23,20 +23,29 @@ const emits = defineEmits<{
 </script>
 
 <template>
-<input
-  class="input"
-  :type="props.type"
-  :value="props.modelValue"
-  @input="emits('update:modelValue', ($event.target as HTMLInputElement).value)"
-  :disabled="props.disabled"
-  :required="props.required">
+  <label>
+    <slot />
+    <input
+      class="input"
+      :type="props.type"
+      :value="props.modelValue"
+      @input="emits('update:modelValue', ($event.target as HTMLInputElement).value)"
+      :disabled="props.disabled"
+      :required="props.required">
+  </label>
 </template>
 
 <style scoped>
+label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+}
+
 input {
   padding: 0 5px;
   background-color: var(--clr-neutral-100);
-  border-radius: var(--br-primary);
+  border-radius: var(--br-secondary);
   border: 1px solid var(--clr-neutral-700);
   transition: ease .3s;
 }
