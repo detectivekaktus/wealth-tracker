@@ -8,14 +8,18 @@ useSeoMeta({
   description: "Log in to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const form = reactive({
-  username: "",
-  password: "",
-});
-const error = ref("");
+const { form, error, submitForm } = useForm({
+  "username": "",
+  "password": ""
+},
+(form) => {
+  if (form.username!.trim().length > 32)
+    return "Enter username that's 1-32 characters long.";
+  return "";
+})
 
-function submitForm() {
-  
+function login() {
+  // TODO: POST /api/login
 }
 </script>
 
@@ -23,9 +27,9 @@ function submitForm() {
   <div class="container page-root">
     <div class="content-wrapper">
       <h1>Welcome back 👋</h1>
-      <form @submit.prevent="submitForm">
-        <AppTextbox v-model="form.username" type="text">Username</AppTextbox>
-        <AppTextbox v-model="form.password" type="password">Password</AppTextbox>
+      <form @submit.prevent="submitForm(login)">
+        <AppTextbox v-model="form.username!" type="text" required>Username</AppTextbox>
+        <AppTextbox v-model="form.password!" type="password" required>Password</AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>
         <AppButton>Log in</AppButton>
       </form>

@@ -9,16 +9,24 @@ useSeoMeta({
   description: "Sign up to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const form = reactive({
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: ""
-});
-const error = ref("");
+const { form, error, submitForm } = useForm({
+  "username": "",
+  "email": "",
+  "password": "",
+  "confirmPassword": ""
+},
+(form) => {
+  if (form.username!.trim().length > 32)
+    return "Enter username that's 1-32 characters long."
+  if (form.email!.trim().length > 255)
+    return "Enter a valid email address."
+  if (form.password !== form.confirmPassword)
+    return "The passwords don't match."
+  return "";
+})
 
-function submitForm() {
-  
+function signup() {
+  // TODO: POST /api/signup
 }
 </script>
 
@@ -26,11 +34,11 @@ function submitForm() {
   <div class="container page-root">
     <div class="content-wrapper">
       <h1>Let's start 🚀</h1>
-      <form @submit.prevent="submitForm">
-        <AppTextbox v-model="form.username" type="text">Username</AppTextbox>
-        <AppTextbox v-model="form.email" type="email">Email</AppTextbox>
-        <AppTextbox v-model="form.password" type="password">Password</AppTextbox>
-        <AppTextbox v-model="form.confirmPassword" type="password">Confirm password</AppTextbox>
+      <form @submit.prevent="submitForm(signup)">
+        <AppTextbox v-model="form.username!" type="text" required>Username</AppTextbox>
+        <AppTextbox v-model="form.email!" type="email" required>Email</AppTextbox>
+        <AppTextbox v-model="form.password!" type="password" required>Password</AppTextbox>
+        <AppTextbox v-model="form.confirmPassword!" type="password" required>Confirm password</AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>
         <AppButton>Sign up</AppButton>
       </form>
