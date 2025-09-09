@@ -1,6 +1,6 @@
 <template>
-  <main>
+  <main class="margin-bottom">
     <slot />
   </main>
-  <AppFooter class="margin-top" />
+  <AppFooter />
 </template>

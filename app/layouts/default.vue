@@ -12,9 +12,9 @@ const navItems = [
 <template>
   <div class="main-wrapper">
     <AppNavigation :items="navItems"/>
-    <main>
+    <main class="margin-bottom">
       <slot />
     </main>
   </div>
-  <AppFooter class="margin-top" />
+  <AppFooter />
 </template>
