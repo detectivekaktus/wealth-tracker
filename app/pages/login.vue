@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { AuthSchema } from '~~/shared/types/api/auth';
+
 definePageMeta({
   layout: "auth"
 });
@@ -8,15 +10,7 @@ useSeoMeta({
   description: "Log in to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const { form, error, submitForm } = useForm({
-  "username": "",
-  "password": ""
-},
-(form) => {
-  if (form.username!.trim().length > 32)
-    return "Enter username that's 1-32 characters long.";
-  return "";
-})
+const { form, error, submit } = useForm(AuthSchema, login);
 
 function login() {
   // TODO: POST /api/login
@@ -27,9 +21,9 @@ function login() {
   <div class="container page-root">
     <div class="content-wrapper">
       <h1>Welcome back 👋</h1>
-      <form @submit.prevent="submitForm(login)">
-        <AppTextbox v-model="form.username!" type="text" required>Username</AppTextbox>
-        <AppTextbox v-model="form.password!" type="password" required>Password</AppTextbox>
+      <form @submit.prevent="submit">
+        <AppTextbox v-model="form.email" type="email" required>Email</AppTextbox>
+        <AppTextbox v-model="form.password" type="password" required>Password</AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>
         <AppButton>Log in</AppButton>
       </form>

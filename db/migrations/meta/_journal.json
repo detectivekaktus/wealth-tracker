@@ -29,6 +29,13 @@
       "when": 1756632833269,
       "tag": "0003_burly_grey_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1757507936094,
+      "tag": "0004_chubby_the_anarchist",
+      "breakpoints": true
     }
   ]
 }

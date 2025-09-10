@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { type Currency } from "#shared/types/api/currency";
+import { AuthSchema } from "#shared/types/api/auth";
+import z from "zod";
 
 // TODO: Implement sign with Google.
 definePageMeta({
@@ -16,24 +18,14 @@ const { data: currencies, error: fetchError } = await useFetch<Currency[]>("/api
 const displayCurrencies = computed(() => (currencies.value ?? []).map((c) => `${c.name} (${c.code})`));
 const currency = ref("");
 
-const { form, error, submitForm } = useForm({
-  "username": "",
-  "email": "",
-  "password": "",
-  "confirmPassword": ""
-},
-(form) => {
-  const username = form.username!.trim();
-  if (username.length > 32 || username.length < 3)
-    return "Enter username that's 3-32 characters long."
-  if (form.email!.trim().length > 255)
-    return "Enter a valid email address."
-  if (form.password !== form.confirmPassword)
-    return "The passwords don't match."
-  return "";
-})
+const SignupSchema = AuthSchema.extend({
+  username: z.string().min(4, "The username is too short.").max(32, "The username is too long."),
+  name: z.string().min(4, "The display name is too short.").max(32, "The display name is too long."),
+  confirmPassword: z.string().min(8),
+}).refine((data) => data.password === data.confirmPassword, "The passwords don't match.");
+const { form, error, submit } = useForm(SignupSchema, signup);
 
-function signup() {
+async function signup() {
   // TODO: POST /api/auth/signup
 }
 </script>
@@ -42,20 +34,23 @@ function signup() {
   <div class="container page-root">
     <div class="content-wrapper">
       <h1>Let's start 🚀</h1>
-      <form @submit.prevent="submitForm(signup)">
-        <AppTextbox v-model="form.username!" type="text" required>
+      <form @submit.prevent="submit">
+        <AppTextbox v-model="form.username" type="text" required>
           Username
         </AppTextbox>
-        <AppTextbox v-model="form.email!" type="email" required>
+        <AppTextbox v-model="form.name" type="text" required>
+          Display name
+        </AppTextbox>
+        <AppTextbox v-model="form.email" type="email" required>
           Email
         </AppTextbox>
         <RekaSelect :items="displayCurrencies" v-model="currency" placeholder="Select preferred currency..." required>
           Currency
         </RekaSelect>
-        <AppTextbox v-model="form.password!" type="password" required>
+        <AppTextbox v-model="form.password" type="password" required>
           Password
         </AppTextbox>
-        <AppTextbox v-model="form.confirmPassword!" type="password" required>
+        <AppTextbox v-model="form.confirmPassword" type="password" required>
           Confirm password
         </AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>

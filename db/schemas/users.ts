@@ -21,6 +21,7 @@ export const users = pgTable("users", {
   emailVerified: boolean("email_verified").default(false),
   password: text("password").notNull(),
   name: varchar("name", { length: 32 }).notNull(),
+  displayName: varchar("display_name", { length: 32 }).notNull(),
   currencyId: integer("preferred_currency").notNull().references(() => currencies.id)
 });
 
