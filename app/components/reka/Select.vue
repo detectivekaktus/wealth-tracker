@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { SelectArrow, SelectContent, SelectGroup, SelectItem, SelectItemIndicator, SelectItemText, SelectLabel, SelectPortal, SelectRoot, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, SelectViewport } from 'reka-ui';
 
+/**
+ * Select box component.
+ *
+ * @props {string[]} items Items to be displayed inside the select.
+ * @props {string?} placeholder
+ * @props {boolean?} required If `true` makes the select requireable.
+ */
 const props = defineProps<{
   modelValue: string,
   items: string[],
@@ -14,44 +21,54 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <SelectRoot
-    :model-value="props.modelValue"
-    @update:model-value="emits('update:modelValue', $event)">
-    <SelectTrigger class="select-trigger input">
-      <SelectValue :placeholder="props.placeholder" />
-      <Icon name="material-symbols:arrow-drop-down" />
-    </SelectTrigger>
+  <label>
+    <slot />
+    <SelectRoot
+      :model-value="props.modelValue"
+      @update:model-value="emits('update:modelValue', $event)"
+      :required="props.required">
+      <SelectTrigger class="select-trigger input">
+        <SelectValue :placeholder="props.placeholder" />
+        <Icon name="material-symbols:arrow-drop-down" />
+      </SelectTrigger>
 
-    <SelectPortal>
-      <SelectContent class="select-content">
-        <SelectScrollUpButton class="select-scroll-button">
-          <Icon name="material-symbols:arrow-drop-up" />
-        </SelectScrollUpButton>
-        <SelectViewport class="select-viewport">
-          <SelectGroup>
-            <SelectItem
-            v-for="(item, index) in props.items"
-            :key="index"
-            :value="item"
-            class="select-item">
-              <SelectItemIndicator class="select-item-indicator">
-                <Icon name="material-symbols:check-rounded" />
-              </SelectItemIndicator>
-              <SelectItemText>
-                {{ item }}
-              </SelectItemText>
-            </SelectItem>
-          </SelectGroup>
-          <SelectSeparator />
-        </SelectViewport>
-        <SelectScrollDownButton class="select-scroll-button" />
-        <SelectArrow />
-      </SelectContent>
-    </SelectPortal>
-  </SelectRoot>
+      <SelectPortal>
+        <SelectContent class="select-content">
+          <SelectScrollUpButton class="select-scroll-button">
+            <Icon name="material-symbols:arrow-drop-up" />
+          </SelectScrollUpButton>
+          <SelectViewport class="select-viewport">
+            <SelectGroup>
+              <SelectItem
+              v-for="(item, index) in props.items"
+              :key="index"
+              :value="item"
+              class="select-item">
+                <SelectItemIndicator class="select-item-indicator">
+                  <Icon name="material-symbols:check-rounded" />
+                </SelectItemIndicator>
+                <SelectItemText>
+                  {{ item }}
+                </SelectItemText>
+              </SelectItem>
+            </SelectGroup>
+            <SelectSeparator />
+          </SelectViewport>
+          <SelectScrollDownButton class="select-scroll-button" />
+          <SelectArrow />
+        </SelectContent>
+      </SelectPortal>
+    </SelectRoot>
+  </label>
 </template>
 
 <style scoped>
+label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+}
+
 .select-trigger {
   padding: 5px;
   display: inline-flex;
@@ -88,6 +105,10 @@ const emits = defineEmits<{
 }
 
 .select-item-indicator {
+  color: var(--clr-accent-500);
+}
+
+.select-item[data-highlighted] .select-item-indicator {
   color: var(--clr-neutral-200);
 }
 </style>

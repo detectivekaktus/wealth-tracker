@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { type Currency } from "#shared/types/api/currency";
+
 // TODO: Implement sign with Google.
 definePageMeta({
   layout: "auth"
@@ -9,6 +11,11 @@ useSeoMeta({
   description: "Sign up to Wealth Tracker to keep track of your financial resources today!"
 })
 
+const { data: currencies, error: fetchError } = await useFetch<Currency[]>("/api/currencies");
+//                                 data.value ?? [] = if data.value is nullish, use [] instead
+const displayCurrencies = computed(() => (currencies.value ?? []).map((c) => `${c.name} (${c.code})`));
+const currency = ref("");
+
 const { form, error, submitForm } = useForm({
   "username": "",
   "email": "",
@@ -16,8 +23,9 @@ const { form, error, submitForm } = useForm({
   "confirmPassword": ""
 },
 (form) => {
-  if (form.username!.trim().length > 32)
-    return "Enter username that's 1-32 characters long."
+  const username = form.username!.trim();
+  if (username.length > 32 || username.length < 3)
+    return "Enter username that's 3-32 characters long."
   if (form.email!.trim().length > 255)
     return "Enter a valid email address."
   if (form.password !== form.confirmPassword)
@@ -26,7 +34,7 @@ const { form, error, submitForm } = useForm({
 })
 
 function signup() {
-  // TODO: POST /api/signup
+  // TODO: POST /api/auth/signup
 }
 </script>
 
@@ -35,11 +43,24 @@ function signup() {
     <div class="content-wrapper">
       <h1>Let's start 🚀</h1>
       <form @submit.prevent="submitForm(signup)">
-        <AppTextbox v-model="form.username!" type="text" required>Username</AppTextbox>
-        <AppTextbox v-model="form.email!" type="email" required>Email</AppTextbox>
-        <AppTextbox v-model="form.password!" type="password" required>Password</AppTextbox>
-        <AppTextbox v-model="form.confirmPassword!" type="password" required>Confirm password</AppTextbox>
+        <AppTextbox v-model="form.username!" type="text" required>
+          Username
+        </AppTextbox>
+        <AppTextbox v-model="form.email!" type="email" required>
+          Email
+        </AppTextbox>
+        <RekaSelect :items="displayCurrencies" v-model="currency" placeholder="Select preferred currency..." required>
+          Currency
+        </RekaSelect>
+        <AppTextbox v-model="form.password!" type="password" required>
+          Password
+        </AppTextbox>
+        <AppTextbox v-model="form.confirmPassword!" type="password" required>
+          Confirm password
+        </AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>
+        <!-- TODO: If there's a fetch error with 5xx response code, render a whole different page with the error -->
+        <p v-if="fetchError" class="error-msg">{{ fetchError.message }}</p>
         <AppButton>Sign up</AppButton>
       </form>
       <div class="other-options">
