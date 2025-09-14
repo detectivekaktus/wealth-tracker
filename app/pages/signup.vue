@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type Currency } from "#shared/types/api/currency";
-import { AuthSchema } from "#shared/types/api/auth";
+import { SignupSchema, type SignupResponse } from "#shared/types/api/auth";
 import z from "zod";
 
 // TODO: Implement sign with Google.
@@ -13,20 +13,37 @@ useSeoMeta({
   description: "Sign up to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const { data: currencies, error: fetchError } = await useFetch<Currency[]>("/api/currencies");
+const { data: currencies, pending, error: fetchError } = await useFetch<Currency[]>("/api/currencies");
 //                                 data.value ?? [] = if data.value is nullish, use [] instead
 const displayCurrencies = computed(() => (currencies.value ?? []).map((c) => `${c.name} (${c.code})`));
 const currency = ref("");
+watch(currency, async (newCurrency) => {
+  form.currencyId = displayCurrencies.value.findIndex((c) => c === newCurrency) + 1;
+});
 
-const SignupSchema = AuthSchema.extend({
-  username: z.string().min(4, "The username is too short.").max(32, "The username is too long."),
-  name: z.string().min(4, "The display name is too short.").max(32, "The display name is too long."),
+const SignupFormSchema = SignupSchema.extend({
   confirmPassword: z.string().min(8),
 }).refine((data) => data.password === data.confirmPassword, "The passwords don't match.");
-const { form, error, submit } = useForm(SignupSchema, signup);
+const { form, error, submit } = useForm(SignupFormSchema, signup);
 
 async function signup() {
-  // TODO: POST /api/auth/signup
+  try {
+    const res = await $fetch<SignupResponse>("/api/auth/signup", {
+      method: "POST",
+      body: {
+        email: form.email,
+        password: form.password,
+        name: form.name,
+        displayName: form.displayName,
+        currencyId: form.currencyId
+      },
+    });
+    // TODO: Use global state with nuxt built in useState composable.
+    // Store the jwt token there and reuse it across the application.
+    await navigateTo("/");
+  } catch (e) {
+    error.value = "Something went wrong.";
+  }
 }
 </script>
 
@@ -35,18 +52,20 @@ async function signup() {
     <div class="content-wrapper">
       <h1>Let's start 🚀</h1>
       <form @submit.prevent="submit">
-        <AppTextbox v-model="form.username" type="text" required>
+        <AppTextbox v-model="form.name" type="text" required>
           Username
         </AppTextbox>
-        <AppTextbox v-model="form.name" type="text" required>
+        <AppTextbox v-model="form.displayName" type="text" required>
           Display name
         </AppTextbox>
         <AppTextbox v-model="form.email" type="email" required>
           Email
         </AppTextbox>
-        <RekaSelect :items="displayCurrencies" v-model="currency" placeholder="Select preferred currency..." required>
-          Currency
-        </RekaSelect>
+        <AppSpinner :pending>
+          <RekaSelect :items="displayCurrencies" v-model="currency" placeholder="Select preferred currency..." required>
+            Currency
+          </RekaSelect>
+        </AppSpinner>
         <AppTextbox v-model="form.password" type="password" required>
           Password
         </AppTextbox>

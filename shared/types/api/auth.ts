@@ -10,9 +10,20 @@ import * as z from "zod";
  * 
  * This schema can also be used for loging in as it is.
  */
-export const AuthSchema = z.object({
-  email: z.email("Invalid email address.").max(255, "The email address is too long."),
+const AuthSchema = z.object({
+  email: z.email("Invalid email address.").trim().max(255, "The email address is too long."),
   // TODO: Define a regex for password that must include upper and lower characters, at least 1 number
   // and at least 1 special character.
   password: z.string().min(8, "The password is too short."),
 });
+
+export const SignupSchema = AuthSchema.extend({
+  name: z.string().trim().min(4, "The username is too short.").max(32, "The username is too long."),
+  displayName: z.string().trim().min(4, "The display name is too short.").max(32, "The display name is too long."),
+  currencyId: z.number().gt(0, "Invalid currency.")
+});
+
+export type SignupRequest = z.infer<typeof SignupSchema>;
+export type SignupResponse = {
+  token: string
+};
