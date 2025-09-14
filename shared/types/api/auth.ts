@@ -24,6 +24,6 @@ export const SignupSchema = AuthSchema.extend({
 });
 
 export type SignupRequest = z.infer<typeof SignupSchema>;
-export type SignupResponse = {
+export type AuthResponse = {
   token: string
 };
