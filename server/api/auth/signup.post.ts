@@ -3,9 +3,7 @@ import db from "db";
 import { users } from "db/schemas";
 import { DatabaseError } from "pg";
 import { hash } from "bcrypt";
-import { createJwtToken, createRefreshToken } from "~~/server/utils/jwt";
-
-const SALT_ROUNDS = 6;
+import { createJwtToken, createRefreshToken, SALT_ROUNDS } from "~~/server/utils/jwt";
 
 export default defineEventHandler(async (event) => {
   const body: SignupRequest = event.context.parsedBody;

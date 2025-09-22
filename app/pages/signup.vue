@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type Currency } from "#shared/types/api/currency";
-import { SignupSchema, type SignupResponse } from "#shared/types/api/auth";
+import { SignupSchema, type AuthResponse } from "#shared/types/api/auth";
 import z from "zod";
 
 // TODO: Implement sign with Google.
@@ -28,7 +28,7 @@ const { form, error, submit } = useForm(SignupFormSchema, signup);
 
 async function signup() {
   try {
-    const res = await $fetch<SignupResponse>("/api/auth/signup", {
+    const res = await $fetch<AuthResponse>("/api/auth/signup", {
       method: "POST",
       body: {
         email: form.email,

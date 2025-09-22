@@ -27,3 +27,6 @@ export type SignupRequest = z.infer<typeof SignupSchema>;
 export type AuthResponse = {
   token: string
 };
+
+export const LoginSchema = AuthSchema;
+export type LoginRequest = z.infer<typeof LoginSchema>;
