@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type Currency } from "#shared/types/api/currency";
-import { SignupSchema, type AuthResponse } from "#shared/types/api/auth";
+import { SignupSchema } from "#shared/types/api/auth";
 import z from "zod";
 
 // TODO: Implement sign with Google.
@@ -28,7 +28,7 @@ const { form, error, submit } = useForm(SignupFormSchema, signup);
 
 async function signup() {
   try {
-    const res = await $fetch<AuthResponse>("/api/auth/signup", {
+    await $fetch("/api/auth/signup", {
       method: "POST",
       body: {
         email: form.email,
@@ -38,8 +38,6 @@ async function signup() {
         currencyId: form.currencyId
       },
     });
-    // TODO: Use global state with nuxt built in useState composable.
-    // Store the jwt token there and reuse it across the application.
     await navigateTo("/");
   } catch (e) {
     error.value = "Something went wrong.";

@@ -1,9 +1,10 @@
-import { SignupRequest, AuthResponse } from "#shared/types/api/auth";
+import { SignupRequest } from "#shared/types/api/auth";
 import db from "db";
 import { users } from "db/schemas";
 import { DatabaseError } from "pg";
 import { hash } from "bcrypt";
-import { createJwtToken, createRefreshToken, SALT_ROUNDS } from "~~/server/utils/jwt";
+import { createJwtToken, createRefreshToken } from "~~/server/utils/jwt";
+import { SALT_ROUNDS } from "~~/server/utils/constants";
 
 export default defineEventHandler(async (event) => {
   const body: SignupRequest = event.context.parsedBody;
@@ -21,7 +22,12 @@ export default defineEventHandler(async (event) => {
       sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7 // 1 week
     });
-    return { token: jwt } as AuthResponse;
+    setCookie(event, "_wealth_jwt", jwt, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 // 1 hour
+    });
   } catch (e: unknown) {
     if (e instanceof DatabaseError) {
       if (e.constraint == "users_email_key") {

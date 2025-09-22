@@ -1,6 +1,5 @@
 import { jwtVerify } from "jose";
 import { createJwtToken, RefreshJwtPayload } from "~~/server/utils/jwt";
-import { AuthResponse } from "#shared/types/api/auth";
 
 export default defineEventHandler(async (event) => {
   const refresh = getCookie(event, "_wealth_refresh");
@@ -15,7 +14,12 @@ export default defineEventHandler(async (event) => {
     const { payload } = await jwtVerify(refresh, REFRESH_SECRET);
     const refreshPayload = payload as RefreshJwtPayload;
     const jwt = await createJwtToken(refreshPayload.id);
-    return { token: jwt } as AuthResponse;
+    setCookie(event, "_wealth_jwt", jwt, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 // 1 hour
+    });
   } catch (e) {
     throw createError({
       statusCode: 400,

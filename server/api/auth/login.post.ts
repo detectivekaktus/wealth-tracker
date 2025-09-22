@@ -2,7 +2,7 @@ import { compare } from "bcrypt";
 import db from "db";
 import { users } from "db/schemas";
 import { eq } from "drizzle-orm";
-import { AuthResponse, LoginRequest } from "#shared/types/api/auth";
+import { LoginRequest } from "#shared/types/api/auth";
 
 export default defineEventHandler(async (event) => {
   const body: LoginRequest = event.context.parsedBody;
@@ -29,5 +29,10 @@ export default defineEventHandler(async (event) => {
     sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7 // 1 week
   });
-  return { token: jwt } as AuthResponse;
+  setCookie(event, "_wealth_jwt", jwt, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 // 1 hour
+  });
 });

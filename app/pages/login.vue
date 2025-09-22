@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AuthSchema } from '~~/shared/types/api/auth';
+import { LoginSchema } from '#shared/types/api/auth';
 
 definePageMeta({
   layout: "auth"
@@ -10,10 +10,18 @@ useSeoMeta({
   description: "Log in to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const { form, error, submit } = useForm(AuthSchema, login);
+const { form, error, submit } = useForm(LoginSchema, login);
 
-function login() {
-  // TODO: POST /api/login
+async function login() {
+  try {
+    await $fetch("/api/auth/login", {
+      method: "POST",
+      body: form
+    });
+    await navigateTo("/");
+  } catch (e) {
+    error.value = "Something went wrong.";
+  }
 }
 </script>
 

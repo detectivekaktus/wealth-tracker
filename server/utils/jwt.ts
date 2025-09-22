@@ -3,8 +3,6 @@ import { SignJWT } from "jose";
 import db from "db";
 import { users } from "db/schemas";
 
-export const SALT_ROUNDS = 6;
-
 export type JwtTokenType = "jwt" | "refresh";
 
 export type RefreshJwtPayload = {

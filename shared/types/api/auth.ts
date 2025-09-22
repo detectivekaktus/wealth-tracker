@@ -22,11 +22,7 @@ export const SignupSchema = AuthSchema.extend({
   displayName: z.string().trim().min(4, "The display name is too short.").max(32, "The display name is too long."),
   currencyId: z.number().gt(0, "Invalid currency.")
 });
-
 export type SignupRequest = z.infer<typeof SignupSchema>;
-export type AuthResponse = {
-  token: string
-};
 
 export const LoginSchema = AuthSchema;
 export type LoginRequest = z.infer<typeof LoginSchema>;
