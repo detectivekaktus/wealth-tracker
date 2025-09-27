@@ -21,14 +21,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const jwt = await createJwtToken(user.id);
-  const refresh = await createRefreshToken(user.id);
-  
-  setCookie(event, "_wealth_refresh", refresh, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    maxAge: 60 * 60 * 24 * 7 // 1 week
-  });
   setCookie(event, "_wealth_jwt", jwt, {
     httpOnly: true,
     secure: true,

@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { SignJWT } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 import db from "db";
 import { users } from "db/schemas";
 
@@ -34,19 +34,19 @@ export async function createJwtToken(userId: number): Promise<string> {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("1 hour")
+    .setExpirationTime("1 day")
     .sign(JWT_SECRET);
 }
 
-export async function createRefreshToken(userId: number): Promise<string> {
-  const payload: RefreshJwtPayload = {
-    tokenType: "refresh",
-    id: userId
-  };
-
-  return await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("1 week")
-    .sign(REFRESH_SECRET);
+/**
+ * Verifies JWT token. Accepts undefined as parameter which always returns
+ * `false` when evoked.
+ * 
+ * @param token JWT token
+ * @returns `true` if JWT is verified successfully, `false` otherwise.
+ */
+export async function verifyJwtToken(token: string | undefined) {
+  if (!token)
+    return false;
+  return await jwtVerify(token, JWT_SECRET);
 }
