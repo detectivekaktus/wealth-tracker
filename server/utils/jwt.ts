@@ -2,28 +2,13 @@ import { eq } from "drizzle-orm";
 import { jwtVerify, SignJWT } from "jose";
 import db from "db";
 import { users } from "db/schemas";
-
-export type JwtTokenType = "jwt" | "refresh";
-
-export type RefreshJwtPayload = {
-  tokenType: JwtTokenType,
-  id: number
-}
-
-export type UserJwtPayload = {
-  tokenType: JwtTokenType,
-  id: number,
-  name: string,
-  displayName: string,
-  email: string,
-  currencyId: number
-}
+import { JWTInvalid } from "jose/errors";
+import { User } from "#shared/types/api/auth";
 
 export async function createJwtToken(userId: number): Promise<string> {
   const user = (await db.select().from(users).where(eq(users.id, userId)))[0];
 
-  const payload: UserJwtPayload = {
-    tokenType: "jwt",
+  const payload: User = {
     id: user.id,
     name: user.name,
     displayName: user.displayName,
@@ -39,14 +24,14 @@ export async function createJwtToken(userId: number): Promise<string> {
 }
 
 /**
- * Verifies JWT token. Accepts undefined as parameter which always returns
- * `false` when evoked.
+ * Verifies JWT token. Accepts undefined as parameter which always throws
+ * `JWTInvalid` error.
  * 
  * @param token JWT token
- * @returns `true` if JWT is verified successfully, `false` otherwise.
+ * @returns `JWTPayload` if JWT is valid, otherwise error is thrown
  */
 export async function verifyJwtToken(token: string | undefined) {
   if (!token)
-    return false;
+    throw new JWTInvalid("No token found.")
   return await jwtVerify(token, JWT_SECRET);
 }

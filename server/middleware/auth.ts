@@ -10,18 +10,29 @@ const allowed = [
 
 export default defineEventHandler(async (event) => {
   const url = getRequestURL(event);
-  if (allowed.includes(url.pathname))
-    return;
-
   const jwt = getCookie(event, "_wealth_jwt");
-  const isValid = verifyJwtToken(jwt);
-  if (!jwt || !isValid) {
-    if (url.pathname.startsWith("/api/")) {
+  try {
+    const { payload } = await verifyJwtToken(jwt);
+    
+    // user is logged in and tries to access `allowed`
+    // endpoints
+    if (allowed.includes(url.pathname))
+      await sendRedirect(event, "/", 302);
+    
+    const { iat, exp, ...user } = payload;
+    event.context.user = user;
+  } catch (e) {
+    // user is not logged in and tries to access `allowed`
+    // endpoints
+    if (allowed.includes(url.pathname))
+      return;
+    else if (url.pathname.startsWith("/api/")) {
       throw createError({
         statusCode: 401,
         statusMessage: "Unauthorized."
       });
     }
+
     await sendRedirect(event, "/login", 302);
   }
 });
