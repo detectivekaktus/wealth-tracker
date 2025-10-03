@@ -7,7 +7,7 @@ import type { User } from "#shared/types/api/auth";
 
 /**
  * Gets currently logged in user data with by making an API
- * call to `/api/auth/me`.
+ * call to `/api/users/me`.
  * 
  * @returns logged in user
  */
@@ -16,7 +16,7 @@ export function useMe() {
 
   const fetchMe = async () => {
     try {
-      me.value = await $fetch("/api/auth/me");
+      me.value = await $fetch("/api/users/me");
     } catch (e) {
       me.value = null;
     }
