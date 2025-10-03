@@ -37,9 +37,7 @@ const emits = defineEmits<{
 
 <style scoped>
 label {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-50);
+  display: grid;
 }
 
 input {

@@ -1,5 +1,5 @@
 <template>
-  <main class="margin-bottom">
+  <main class="margin-bottom container">
     <slot />
   </main>
   <AppFooter />
