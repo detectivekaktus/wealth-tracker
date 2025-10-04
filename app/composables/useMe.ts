@@ -21,7 +21,10 @@ export function useMe() {
       me.value = null;
     }
   }
-  fetchMe()
+  
+  if (!me.value) {
+    fetchMe()    
+  }
 
   return me;
 }
