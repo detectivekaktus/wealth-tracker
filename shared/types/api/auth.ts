@@ -26,12 +26,3 @@ export type SignupRequest = z.infer<typeof SignupSchema>;
 
 export const LoginSchema = AuthSchema;
 export type LoginRequest = z.infer<typeof LoginSchema>;
-
-export const UserSchema = z.object({
-  id: z.number().gt(0),
-  name: z.string().min(4).max(32),
-  displayName: z.string().min(4).max(32),
-  email: z.email(),
-  currencyId: z.number().gt(0)
-})
-export type User = z.infer<typeof UserSchema>;

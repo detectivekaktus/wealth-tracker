@@ -1,4 +1,4 @@
-import { User } from "#shared/types/api/auth";
+import { User } from "#shared/types/api/user";
 
 export default defineEventHandler(async (event) => {
   const user: User = event.context.user;

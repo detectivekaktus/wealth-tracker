@@ -1,4 +1,4 @@
-import type { User } from "#shared/types/api/auth";
+import type { User } from "#shared/types/api/user";
 
 // Nuxt composables must be synchoronous, otherwise they can't
 // function properly. Thus, we need to create an async wrapper
