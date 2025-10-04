@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { type Currency } from "#shared/types/api/currency";
 import { SignupSchema } from "#shared/types/api/auth";
+import { useBlankForm } from "~/composables/useBlankForm";
 import z from "zod";
 
 // TODO: Implement sign with Google.
@@ -22,7 +22,7 @@ watch(currency, async (newCurrency) => {
 const SignupFormSchema = SignupSchema.extend({
   confirmPassword: z.string().min(8),
 }).refine((data) => data.password === data.confirmPassword, "The passwords don't match.");
-const { form, error, submit } = useForm(SignupFormSchema, signup);
+const { form, error, submit } = useBlankForm(SignupFormSchema, signup);
 
 async function signup() {
   try {
