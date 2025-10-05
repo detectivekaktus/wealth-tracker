@@ -2,7 +2,7 @@ import { compare } from "bcrypt";
 import db from "db";
 import { users } from "db/schemas";
 import { eq } from "drizzle-orm";
-import { LoginRequest } from "#shared/types/api/auth";
+import { LoginRequest } from "#shared/schemas/backend/auth";
 
 export default defineEventHandler(async (event) => {
   const body: LoginRequest = event.context.parsedBody;

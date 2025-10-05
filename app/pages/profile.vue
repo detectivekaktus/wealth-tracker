@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { UserUpdateForm } from '#shared/schemas/frontend/user';
+import type { PatchUserRequest } from '#shared/schemas/backend/user';
 
 const { me, fetchMe } = useMe();
 await fetchMe();
@@ -15,7 +16,23 @@ async function logout() {
 }
 
 async function patch() {
-  console.log("Patched.");
+  try {
+    const body: PatchUserRequest = {
+      name: form.name,
+      displayName: form.displayName,
+      email: form.email,
+      currencyId: form.currencyId,
+      password: form.password
+    }
+    
+    await $fetch("/api/users/me", {
+      method: "PATCH",
+      body
+    });
+    location.reload();
+  } catch {
+    error.value = "Something went wrong";
+  }
 }
 
 const formDefaults = { password: "", confirmPassword: "", ...me.value! }

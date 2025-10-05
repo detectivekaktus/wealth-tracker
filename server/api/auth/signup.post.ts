@@ -1,4 +1,4 @@
-import { SignupRequest } from "#shared/types/api/auth";
+import { SignupRequest } from "#shared/schemas/backend/auth";
 import db from "db";
 import { users } from "db/schemas";
 import { DatabaseError } from "pg";
