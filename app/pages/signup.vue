@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { SignupSchema } from "#shared/types/api/auth";
+import { SignupFormSchema } from "#shared/schemas/frontend/auth";
 import { useBlankForm } from "~/composables/useBlankForm";
-import z from "zod";
 
 // TODO: Implement sign with Google.
 definePageMeta({
@@ -16,12 +15,9 @@ useSeoMeta({
 const { displayCurrencies, error: fetchError } = useCurrencies();
 const currency = ref("");
 watch(currency, async (newCurrency) => {
-  form.currencyId = displayCurrencies.value.findIndex((c) => c === newCurrency) + 1;
+  form.currencyId = displayCurrencies.value.findIndex((c: string) => c === newCurrency) + 1;
 });
 
-const SignupFormSchema = SignupSchema.extend({
-  confirmPassword: z.string().min(8),
-}).refine((data) => data.password === data.confirmPassword, "The passwords don't match.");
 const { form, error, submit } = useBlankForm(SignupFormSchema, signup);
 
 async function signup() {

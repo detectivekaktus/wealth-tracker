@@ -1,4 +1,4 @@
-import type { Currency } from "#shared/types/api/currency";
+import type { Currency } from "#shared/schemas/currency";
 
 export function useCurrencies() {
   const currencies = ref<Currency[]>([]);

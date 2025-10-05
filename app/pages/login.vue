@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LoginSchema } from '#shared/types/api/auth';
+import { LoginSchema } from '#shared/schemas/backend/auth';
 import { useBlankForm } from '~/composables/useBlankForm';
 
 definePageMeta({

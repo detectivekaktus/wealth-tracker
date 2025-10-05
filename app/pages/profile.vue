@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-const me = useMe();
+import { UserUpdateForm } from '#shared/schemas/frontend/user';
+
+const { me, fetchMe } = useMe();
+await fetchMe();
 
 useSeoMeta({
   title: "Your profile | Wealth Tracker",
@@ -11,7 +14,18 @@ async function logout() {
   location.reload()
 }
 
+async function patch() {
+  console.log("Patched.");
+}
+
+const formDefaults = { password: "", confirmPassword: "", ...me.value! }
+const { form, error, submit } = useFormWithDefaults(UserUpdateForm, formDefaults, patch)
+
 const { displayCurrencies, error: fetchError } = useCurrencies();
+const currency = ref("");
+watch(currency, async (newCurrency) => {
+  form.currencyId = displayCurrencies.value.findIndex((c) => c === newCurrency) + 1;
+});
 </script>
 
 <template>
@@ -20,11 +34,16 @@ const { displayCurrencies, error: fetchError } = useCurrencies();
     <p>Your Wealth Tracker profile</p>  
   </div>
   <div class="settings">
-    <h2>General information</h2>
     <form @submit.prevent="submit">
-      <AppTextbox type="text">Display name</AppTextbox>
-      <AppTextbox type="email">Email</AppTextbox>
-      <RekaSelect :items="displayCurrencies">Preferred currency</RekaSelect>
+      <h2>General information</h2>
+      <AppTextbox v-model="form.name" type="text">Profile name</AppTextbox>
+      <AppTextbox v-model="form.displayName" type="text">Display name</AppTextbox>
+      <RekaSelect v-model="currency" :items="displayCurrencies">Preferred currency</RekaSelect>
+      <h2>Danger zone</h2>
+      <AppTextbox v-model="form.email" type="email">Email</AppTextbox>
+      <AppTextbox v-model="form.password" type="password">New password</AppTextbox>
+      <AppTextbox v-model="form.confirmPassword" type="password">Re-type new password</AppTextbox>
+      <p v-if="error" class="error-msg">{{ error }}</p>
       <p v-if="fetchError" class="error-msg">{{ fetchError }}</p>
       <AppButton>Save profile changes</AppButton>
       <AppButton @click="logout" type="button">Log out</AppButton>

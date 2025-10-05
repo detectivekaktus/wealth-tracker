@@ -1,4 +1,4 @@
-import { SignupRequest, SignupSchema, LoginSchema, LoginRequest } from "#shared/types/api/auth";
+import { SignupRequest, SignupSchema, LoginSchema, LoginRequest } from "#shared/schemas/backend/auth";
 
 export default defineEventHandler(async (event) => {
   const url = getRequestURL(event);

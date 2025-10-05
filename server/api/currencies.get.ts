@@ -1,6 +1,6 @@
 import db from "~~/db/index";
 import { currencies } from "~~/db/schemas";
-import { type Currency } from "#shared/types/api/currency"; 
+import { type Currency } from "#shared/schemas/currency"; 
 
 export default defineEventHandler(async () => {
   const data = await db.select().from(currencies);
