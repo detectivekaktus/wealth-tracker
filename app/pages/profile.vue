@@ -40,6 +40,13 @@ const { form, error, submit } = useFormWithDefaults(UserUpdateForm, formDefaults
 
 const { displayCurrencies, error: fetchError } = useCurrencies();
 const currency = ref("");
+
+watchEffect(() => {
+  if (!!me.value && !!displayCurrencies.value) {
+    currency.value = displayCurrencies.value[me.value.currencyId - 1] || "";
+  }
+});
+
 watch(currency, async (newCurrency) => {
   form.currencyId = displayCurrencies.value.findIndex((c) => c === newCurrency) + 1;
 });

@@ -18,4 +18,12 @@ export default defineEventHandler(async (event) => {
   }
 
   await db.update(users).set(data).where(eq(users.id, user.id));
+
+  const jwt = await createJwtToken(user.id);
+  setCookie(event, "_wealth_jwt", jwt, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24 // 1 day
+  });
 });
