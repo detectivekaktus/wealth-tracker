@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
         throwError(parsed.error.issues[0].message || "Malformatted request.");
       }
       event.context.parsedBody = parsed.data as PatchUserRequest;
-    }
+    } break;
 
     default:
       return;

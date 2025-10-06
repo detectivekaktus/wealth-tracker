@@ -12,7 +12,7 @@ useSeoMeta({
 
 async function logout() {
   await $fetch("/api/auth/logout", { method: "POST" });
-  location.reload()
+  await navigateTo("/login");
 }
 
 async function patch() {
@@ -35,8 +35,16 @@ async function patch() {
   }
 }
 
-const formDefaults = { password: "", confirmPassword: "", ...me.value! }
-const { form, error, submit } = useFormWithDefaults(UserUpdateForm, formDefaults, patch)
+if (!me.value) {
+  showError({
+    statusCode: 500,
+    statusMessage: "Something went wrong..."
+  });
+}
+
+const formDefaults = { password: "", confirmPassword: "", ...me.value! }; // me.value! is always defined because it's 
+                                                                          // handled above with `if (!me.value)` check
+const { form, error, submit } = useFormWithDefaults(UserUpdateForm, formDefaults, patch);
 
 const { displayCurrencies, error: fetchError } = useCurrencies();
 const currency = ref("");

@@ -19,8 +19,8 @@ export function useMe() {
       return;
 
     const { data, error } = await useFetch<User>("/api/users/me", { server: true });
-    if (!error.value) {
-      me.value = data.value!
+    if (!error.value && data.value) {
+      me.value = data.value
     }
     else {
       console.error("Couldn't get currently logged in user.");
