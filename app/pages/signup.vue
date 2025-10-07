@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { type Currency } from "#shared/types/api/currency";
-import { SignupSchema } from "#shared/types/api/auth";
-import z from "zod";
+import { SignupFormSchema } from "#shared/schemas/frontend/auth";
+import { useBlankForm } from "~/composables/useBlankForm";
+import CurrencySelect from "~/components/app/CurrencySelect.vue";
 
 // TODO: Implement sign with Google.
 definePageMeta({
@@ -13,19 +13,8 @@ useSeoMeta({
   description: "Sign up to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const { data: currencies, pending, error: fetchError } = await useFetch<Currency[]>("/api/currencies");
-//                                 data.value ?? [] = if data.value is nullish, use [] instead
-const displayCurrencies = computed(() => (currencies.value ?? []).map((c) => `${c.name} (${c.code})`));
-const currency = ref("");
-watch(currency, async (newCurrency) => {
-  form.currencyId = displayCurrencies.value.findIndex((c) => c === newCurrency) + 1;
-});
-
-const SignupFormSchema = SignupSchema.extend({
-  confirmPassword: z.string().min(8),
-}).refine((data) => data.password === data.confirmPassword, "The passwords don't match.");
-const { form, error, submit } = useForm(SignupFormSchema, signup);
-
+const { form, error, submit } = useBlankForm(SignupFormSchema, signup);
+form.currencyId = 1;
 async function signup() {
   try {
     await $fetch("/api/auth/signup", {
@@ -59,11 +48,7 @@ async function signup() {
         <AppTextbox v-model="form.email" type="email" required>
           Email
         </AppTextbox>
-        <AppSpinner :pending>
-          <RekaSelect :items="displayCurrencies" v-model="currency" placeholder="Select preferred currency..." required>
-            Currency
-          </RekaSelect>
-        </AppSpinner>
+        <CurrencySelect v-model="form.currencyId">Preferred currency</CurrencySelect>
         <AppTextbox v-model="form.password" type="password" required>
           Password
         </AppTextbox>
@@ -71,14 +56,12 @@ async function signup() {
           Confirm password
         </AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>
-        <!-- TODO: If there's a fetch error with 5xx response code, render a whole different page with the error -->
-        <p v-if="fetchError" class="error-msg">{{ fetchError.message }}</p>
         <AppButton>Sign up</AppButton>
       </form>
       <div class="other-options">
         <p>Already have an account? <NuxtLink to="/login">Log in</NuxtLink></p>
         <p>OR</p>
-        <AppButton type="external">Sign up with Google</AppButton>
+        <AppButton variation="external">Sign up with Google</AppButton>
       </div>
     </div>
   </div>

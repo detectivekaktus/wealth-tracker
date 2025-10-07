@@ -5,12 +5,20 @@ const allowed = [
   "/login",
 
   "/api/auth/signup",
-  "/api/auth/login"
+  "/api/auth/login",
+];
+
+const ignored = [
+  "/api/currencies"
 ];
 
 export default defineEventHandler(async (event) => {
   const url = getRequestURL(event);
   const jwt = getCookie(event, "_wealth_jwt");
+  
+  if (ignored.includes(url.pathname))
+    return;
+
   try {
     const { payload } = await verifyJwtToken(jwt);
     

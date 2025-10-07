@@ -28,17 +28,17 @@ function createBlank(obj: ZodObject): any {
 }
 
 /**
- * `useForm` composable. Provide the zod schema of the form and callback
+ * `useBlankForm` composable. Provide the zod schema of the form and callback
  * that needs to be ran when the form is submitted.
  * 
  * @param schema `ZodObject` schema of a form
  * @param callback callback that runs on the form submition
  * 
- * Returns the form object of `z.infer<typeof schema>` type with default
+ * @returns the form object of `z.infer<typeof schema>` type with default
  * values set to blank, the error which is given by the zod when parsing
- * the form, and the submit function to attach to the form. 
+ * the form, and the submit function to attach to the form.
  */
-export function useForm<T extends ZodObject>(schema: T, callback: () => void) {
+export function useBlankForm<T extends ZodObject>(schema: T, callback: () => void) {
   type zType = z.infer<typeof schema>;
   const form = createBlank(schema) as zType;
   const error = ref("");
@@ -48,7 +48,7 @@ export function useForm<T extends ZodObject>(schema: T, callback: () => void) {
 
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
-      error.value = parsed.error.issues[0]?.message || "There was an error.";
+      error.value = parsed.error.issues[0]?.message || "Unknown error.";
       return;
     }
 

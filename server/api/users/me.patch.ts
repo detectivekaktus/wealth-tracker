@@ -1,0 +1,29 @@
+import { PatchUserRequest } from "#shared/schemas/backend/user";
+import { User } from "#shared/schemas/user";
+import db from "db";
+import { users } from "db/schemas";
+import { eq } from "drizzle-orm";
+import { hashPassword } from "~~/server/utils/crypt";
+
+export default defineEventHandler(async (event) => {
+  const body: PatchUserRequest = event.context.parsedBody;
+  const user: User = event.context.user;
+
+  // filter entries (key-value pairs) to exclude undefined ones and assemble a new object (`fromEntries`).
+  const data = Object.fromEntries(Object.entries(body).filter(([, val]) => val !== undefined));
+
+  if (data.password) {
+    data.password = data.password as string;
+    data.password = await hashPassword(data.password);
+  }
+
+  await db.update(users).set(data).where(eq(users.id, user.id));
+
+  const jwt = await createJwtToken(user.id);
+  setCookie(event, "_wealth_jwt", jwt, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24 // 1 day
+  });
+});

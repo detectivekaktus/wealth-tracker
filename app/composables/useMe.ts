@@ -1,4 +1,4 @@
-import type { User } from "#shared/types/api/auth";
+import type { User } from "#shared/schemas/user";
 
 // Nuxt composables must be synchoronous, otherwise they can't
 // function properly. Thus, we need to create an async wrapper
@@ -7,21 +7,27 @@ import type { User } from "#shared/types/api/auth";
 
 /**
  * Gets currently logged in user data with by making an API
- * call to `/api/auth/me`.
+ * call to `/api/users/me`.
  * 
- * @returns logged in user
+ * @returns logged in user and a function to fetch it
  */
 export function useMe() {
   const me = useState<User | null>("me", () => null);
 
   const fetchMe = async () => {
-    try {
-      me.value = await $fetch("/api/auth/me");
-    } catch (e) {
-      me.value = null;
-    }
-  }
-  fetchMe()
+    if (me.value)
+      return;
 
-  return me;
+    const { data, error } = await useFetch<User>("/api/users/me", { server: true });
+    if (!error.value && data.value) {
+      me.value = data.value
+    }
+    else {
+      console.error("Couldn't get currently logged in user.");
+    }
+
+    return me;
+  }
+
+  return { me, fetchMe }
 }

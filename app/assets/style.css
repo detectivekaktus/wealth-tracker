@@ -96,6 +96,7 @@ a:hover {
 }
 
 main {
+  margin-top: var(--size-600);
   min-height: 100vh;
 }
 
@@ -105,4 +106,12 @@ main {
     grid-template-columns: auto 1fr;
     gap: var(--spacing-200);
   }
+}
+
+strong {
+  font-weight: var(--fw-bold);
+}
+
+em {
+  color: var(--clr-neutral-500);
 }

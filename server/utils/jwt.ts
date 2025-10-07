@@ -3,7 +3,7 @@ import { jwtVerify, SignJWT } from "jose";
 import db from "db";
 import { users } from "db/schemas";
 import { JWTInvalid } from "jose/errors";
-import { User } from "#shared/types/api/auth";
+import { User } from "#shared/schemas/user";
 
 export async function createJwtToken(userId: number): Promise<string> {
   const user = (await db.select().from(users).where(eq(users.id, userId)))[0];
@@ -13,6 +13,7 @@ export async function createJwtToken(userId: number): Promise<string> {
     name: user.name,
     displayName: user.displayName,
     email: user.email,
+    emailVerified: !!user.emailVerified,
     currencyId: user.currencyId
   };
 

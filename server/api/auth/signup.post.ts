@@ -1,14 +1,13 @@
-import { SignupRequest } from "#shared/types/api/auth";
+import { SignupRequest } from "#shared/schemas/backend/auth";
 import db from "db";
 import { users } from "db/schemas";
 import { DatabaseError } from "pg";
-import { hash } from "bcrypt";
 import { createJwtToken } from "~~/server/utils/jwt";
-import { SALT_ROUNDS } from "~~/server/utils/constants";
+import { hashPassword } from "~~/server/utils/crypt";
 
 export default defineEventHandler(async (event) => {
   const body: SignupRequest = event.context.parsedBody;
-  body.password = await hash(body.password, SALT_ROUNDS);
+  body.password = await hashPassword(body.password);
 
   try {
     const user = (await db.insert(users).values(body).returning())[0];

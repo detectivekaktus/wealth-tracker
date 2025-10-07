@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { LoginSchema } from '#shared/types/api/auth';
+import { LoginSchema } from '#shared/schemas/backend/auth';
+import { useBlankForm } from '~/composables/useBlankForm';
 
 definePageMeta({
   layout: "auth"
@@ -10,7 +11,7 @@ useSeoMeta({
   description: "Log in to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const { form, error, submit } = useForm(LoginSchema, login);
+const { form, error, submit } = useBlankForm(LoginSchema, login);
 
 async function login() {
   try {
