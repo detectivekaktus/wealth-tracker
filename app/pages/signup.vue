@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { SignupFormSchema } from "#shared/schemas/frontend/auth";
 import { useBlankForm } from "~/composables/useBlankForm";
+import CurrencySelect from "~/components/app/CurrencySelect.vue";
 
 // TODO: Implement sign with Google.
 definePageMeta({
@@ -12,14 +13,8 @@ useSeoMeta({
   description: "Sign up to Wealth Tracker to keep track of your financial resources today!"
 })
 
-const { displayCurrencies, error: fetchError } = useCurrencies();
-const currency = ref("");
-watch(currency, async (newCurrency) => {
-  form.currencyId = displayCurrencies.value.findIndex((c: string) => c === newCurrency) + 1;
-});
-
 const { form, error, submit } = useBlankForm(SignupFormSchema, signup);
-
+form.currencyId = 1;
 async function signup() {
   try {
     await $fetch("/api/auth/signup", {
@@ -53,9 +48,7 @@ async function signup() {
         <AppTextbox v-model="form.email" type="email" required>
           Email
         </AppTextbox>
-        <RekaSelect :items="displayCurrencies" v-model="currency" placeholder="Select preferred currency..." required>
-          Currency
-        </RekaSelect>
+        <CurrencySelect v-model="form.currencyId">Preferred currency</CurrencySelect>
         <AppTextbox v-model="form.password" type="password" required>
           Password
         </AppTextbox>
@@ -63,8 +56,6 @@ async function signup() {
           Confirm password
         </AppTextbox>
         <p v-if="error" class="error-msg">{{ error }}</p>
-        <!-- TODO: If there's a fetch error with 5xx response code, render a whole different page with the error -->
-        <p v-if="fetchError" class="error-msg">{{ fetchError }}</p>
         <AppButton>Sign up</AppButton>
       </form>
       <div class="other-options">

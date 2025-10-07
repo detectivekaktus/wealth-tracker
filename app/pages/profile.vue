@@ -1,14 +1,22 @@
 <script lang="ts" setup>
 import { UserUpdateForm } from '#shared/schemas/frontend/user';
 import type { PatchUserRequest } from '#shared/schemas/backend/user';
-
-const { me, fetchMe } = useMe();
-await fetchMe();
+import CurrencySelect from '~/components/app/CurrencySelect.vue';
 
 useSeoMeta({
   title: "Your profile | Wealth Tracker",
   description: "Check out your profile on the best financial tracking tool"
 });
+
+const { me, fetchMe } = useMe();
+await fetchMe();
+
+if (!me.value) {
+  showError({
+    statusCode: 500,
+    statusMessage: "Something went wrong..."
+  });
+}
 
 async function logout() {
   await $fetch("/api/auth/logout", { method: "POST" });
@@ -35,29 +43,9 @@ async function patch() {
   }
 }
 
-if (!me.value) {
-  showError({
-    statusCode: 500,
-    statusMessage: "Something went wrong..."
-  });
-}
-
 const formDefaults = { password: "", confirmPassword: "", ...me.value! }; // me.value! is always defined because it's 
                                                                           // handled above with `if (!me.value)` check
 const { form, error, submit } = useFormWithDefaults(UserUpdateForm, formDefaults, patch);
-
-const { displayCurrencies, error: fetchError } = useCurrencies();
-const currency = ref("");
-
-watchEffect(() => {
-  if (!!me.value && !!displayCurrencies.value) {
-    currency.value = displayCurrencies.value[me.value.currencyId - 1] || "";
-  }
-});
-
-watch(currency, async (newCurrency) => {
-  form.currencyId = displayCurrencies.value.findIndex((c) => c === newCurrency) + 1;
-});
 </script>
 
 <template>
@@ -70,13 +58,12 @@ watch(currency, async (newCurrency) => {
       <h2>General information</h2>
       <AppTextbox v-model="form.name" type="text">Profile name</AppTextbox>
       <AppTextbox v-model="form.displayName" type="text">Display name</AppTextbox>
-      <RekaSelect v-model="currency" :items="displayCurrencies">Preferred currency</RekaSelect>
+      <CurrencySelect v-model="form.currencyId">Preferred currency</CurrencySelect>
       <h2>Danger zone</h2>
       <AppTextbox v-model="form.email" type="email">Email</AppTextbox>
       <AppTextbox v-model="form.password" type="password">New password</AppTextbox>
       <AppTextbox v-model="form.confirmPassword" type="password">Re-type new password</AppTextbox>
       <p v-if="error" class="error-msg">{{ error }}</p>
-      <p v-if="fetchError" class="error-msg">{{ fetchError }}</p>
       <AppButton>Save profile changes</AppButton>
       <AppButton @click="logout" type="button">Log out</AppButton>
     </form>
