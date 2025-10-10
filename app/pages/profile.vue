@@ -65,7 +65,7 @@ const { form, error, submit } = useFormWithDefaults(UserUpdateForm, formDefaults
       <AppTextbox v-model="form.confirmPassword" type="password">Re-type new password</AppTextbox>
       <p v-if="error" class="error-msg">{{ error }}</p>
       <AppButton>Save profile changes</AppButton>
-      <AppButton @click="logout" type="button">Log out</AppButton>
+      <AppButton @click="logout" type="button" variation="outlined">Log out</AppButton>
     </form>
   </div>
 </template>
