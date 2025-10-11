@@ -9,7 +9,7 @@ useSeoMeta({
 });
 
 const { me, fetchMe } = useMe();
-await fetchMe();
+await fetchMe(false);
 
 if (!me.value) {
   showError({
@@ -33,11 +33,8 @@ async function patch() {
       password: form.password
     }
     
-    await $fetch("/api/users/me", {
-      method: "PATCH",
-      body
-    });
-    location.reload();
+    await $fetch("/api/users/me", { method: "PATCH", body });
+    await fetchMe(true);
   } catch {
     error.value = "Something went wrong";
   }

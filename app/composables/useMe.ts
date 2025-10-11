@@ -14,8 +14,14 @@ import type { User } from "#shared/schemas/user";
 export function useMe() {
   const me = useState<User | null>("me", () => null);
 
-  const fetchMe = async () => {
-    if (me.value)
+  /**
+   * Fetches the currently logged in user.
+   * 
+   * @param force if `true` refetches the currently logged in user even if it's already stored.
+   * @returns currently logged in user
+   */
+  const fetchMe = async (force: boolean) => {
+    if (me.value && !force)
       return;
 
     const { data, error } = await useFetch<User>("/api/users/me", { server: true });

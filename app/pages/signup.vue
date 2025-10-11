@@ -61,7 +61,7 @@ async function signup() {
       <div class="other-options">
         <p>Already have an account? <NuxtLink to="/login">Log in</NuxtLink></p>
         <p>OR</p>
-        <AppButton variation="external">Sign up with Google</AppButton>
+        <AppButton variation="outlined">Sign up with Google</AppButton>
       </div>
     </div>
   </div>
